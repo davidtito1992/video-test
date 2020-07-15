@@ -1,8 +1,8 @@
 import React, { memo, useState, useEffect, useCallback } from 'react';
-import { SafeAreaView, View, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, FlatList } from 'react-native';
 import VideoCard from '../../components/VideoCard';
 import Loading from '../../components/Loading';
-import VideoModalPlayer from '../../screens/VideoPlayer';
+import VideoModalPlayer from '../../components/VideoPlayer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getHome } from '../../../redux/home/actions';
 import Orientation from 'react-native-orientation-locker';

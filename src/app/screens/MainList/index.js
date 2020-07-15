@@ -2,10 +2,11 @@ import React, { memo, useState, useEffect, useCallback } from 'react';
 import { SafeAreaView, FlatList } from 'react-native';
 import VideoCard from '../../components/MainVideoCard';
 import Loading from '../../components/Loading';
-import VideoModalPlayer from '../VideoPlayer';
+import VideoModalPlayer from '../../components/VideoPlayer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMainList } from '../../../redux/mainList/actions';
 import { useRoute } from '@react-navigation/native';
+import Orientation from 'react-native-orientation-locker';
 import styles from './styles';
 
 const MainList = () => {
@@ -14,9 +15,12 @@ const MainList = () => {
   const [viewable, setViewable] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [showModal, setShowModal] = useState({ isVisible: false, data: null });
+  const [fullScreen, setFullScreen] = useState(false);
+  const [portraitMode, setPortraitMode] = useState(true);
+
   const dispatch = useDispatch();
   const videos = useSelector(state => state?.mainList.videos);
-  const [showModal, setShowModal] = useState({ isVisible: false, data: null });
   const route = useRoute();
 
   const loadPage = (pageNumber = page, shouldRefresh = false) => {
@@ -27,16 +31,6 @@ const MainList = () => {
     setFeed(shouldRefresh ? data : [...feed, ...data]);
     setLoading(false);
   };
-
-  useEffect(() => {
-    dispatch(getMainList(route.params?.id));
-  }, [route.params?.id]);
-
-  useEffect(() => {
-    if (videos?.length > 0) {
-      setFeed(videos);
-    }
-  }, [videos]);
 
   const refreshList = () => {
     setRefreshing(true);
@@ -65,13 +59,55 @@ const MainList = () => {
     });
   };
 
+  const handleOrientation = orientation => {
+    if (orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT') {
+      setFullScreen(true);
+      setPortraitMode(false);
+    } else {
+      setFullScreen(false);
+      setPortraitMode(true);
+    }
+  };
+
+  useEffect(() => {
+    Orientation.unlockAllOrientations();
+    return () => Orientation.lockToPortrait();
+  }, []);
+
+  useEffect(() => {
+    Orientation.addOrientationListener(handleOrientation);
+    return () => Orientation.removeOrientationListener(handleOrientation);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getMainList(route.params?.id));
+  }, [route.params?.id]);
+
+  useEffect(() => {
+    if (videos?.length > 0) {
+      setFeed(videos);
+    }
+  }, [videos]);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        !portraitMode
+          ? {
+              width: '90%',
+              alignSelf: 'center',
+            }
+          : null,
+      ]}>
       {showModal.isVisible && (
         <VideoModalPlayer
           isVisible={showModal.isVisible}
           toggleModal={toggleModal}
           videoDetail={showModal.data}
+          toggleFullScreen={toggleFullScreen}
+          fullScreen={fullScreen}
+          portraitMode={portraitMode}
         />
       )}
       <FlatList

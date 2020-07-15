@@ -27,7 +27,6 @@ const Card = ({ setShowModal, ...props }) => {
         <View style={styles.overlay}>
           <Image source={play} style={styles.overlayHeart} />
         </View>
-        <Text style={styles.subtitle}>{props.subtitle}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => console.log('test')}

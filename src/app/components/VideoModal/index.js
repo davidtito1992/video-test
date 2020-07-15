@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
-import VideoFullPlayer from '../../../components/VideoFullPlayer';
+import VideoFullPlayer from '../VideoFullPlayer';
 import styles from './styles';
 
 const VideoModal = props => {

@@ -31,7 +31,6 @@ export default StyleSheet.create({
   },
   image: {
     width: '100%',
-    maxWidth: 450,
     height: 200,
     marginVertical: 8,
   },

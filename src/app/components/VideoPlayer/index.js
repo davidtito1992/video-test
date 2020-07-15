@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Modal, View } from 'react-native';
-import VideoFullPlayer from '../../components/VideoFullPlayer';
-import VideoModal from './VideoModal';
+import VideoFullPlayer from '../VideoFullPlayer';
+import VideoModal from '../VideoModal';
 import styles from './styles';
 
 const VideoModalPlayer = ({
