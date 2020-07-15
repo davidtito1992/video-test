@@ -1,52 +1,31 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { memo } from 'react';
 import { Modal, View } from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import VideoFullPlayer from '../../components/VideoFullPlayer';
 import VideoModal from './VideoModal';
 import styles from './styles';
 
-const VideoModalPlayer = props => {
-  const [fullScreen, setFullScreen] = useState(false);
-  const [portraitMode, setPortraitMode] = useState(true);
-
-  const { videoDetail, toggleModal } = props;
-
-  const toggleFullScreen = () => setFullScreen(fullScreen => !fullScreen);
-
+const VideoModalPlayer = ({
+  videoDetail,
+  toggleModal,
+  isVisible,
+  toggleFullScreen,
+  fullScreen,
+  portraitMode,
+}) => {
   const handleOnBack = () =>
     toggleModal({
       isVisible: false,
       data: null,
     });
 
-  const handleOrientation = orientation => {
-    if (orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT') {
-      setFullScreen(true);
-      setPortraitMode(false);
-    } else {
-      setFullScreen(false);
-      setPortraitMode(true);
-    }
-  };
-
-  useEffect(() => {
-    Orientation.unlockAllOrientations();
-    return () => Orientation.lockToPortrait();
-  }, []);
-
-  useEffect(() => {
-    Orientation.addOrientationListener(handleOrientation);
-    return () => Orientation.removeOrientationListener(handleOrientation);
-  }, []);
-
   return (
     <Modal
       animationType={'fade'}
       supportedOrientations={['portrait', 'landscape']}
       transparent={true}
-      visible={props.isVisible}>
+      visible={isVisible}>
       <View style={styles.wrapper}>
-        {fullScreen || !portraitMode ? (
+        {fullScreen ? (
           <VideoFullPlayer
             videoSource={videoDetail?.videoFiles.mp4}
             onBack={handleOnBack}

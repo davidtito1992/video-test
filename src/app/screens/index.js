@@ -39,6 +39,7 @@ const MainStack = ({ route, navigation }) => {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
+        cardStyle: { backgroundColor: '#FFF' },
       }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="MainList" component={MainList} />
