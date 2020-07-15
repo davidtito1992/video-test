@@ -1,11 +1,5 @@
 import React, { memo } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import like from '../../../assets/images/like.png';
 import play from '../../../assets/images/play.png';
 import styles from './styles';
@@ -18,16 +12,12 @@ const Card = ({ setShowModal, ...props }) => {
     });
 
   return (
-    <View style={{ marginBottom: 10, alignItems: 'center' }}>
-      <Text style={styles.title} ellipsizeMode="tail" numberOfLines={2}>
+    <View style={styles.container}>
+      <Text style={styles.title} numberOfLines={2}>
         {props.title}
       </Text>
-      <TouchableOpacity
-        onPress={handleOnPress}
-        style={{
-          width: '100%',
-          alignItems: 'center',
-        }}>
+      <Text style={styles.summary}>{props.summary}</Text>
+      <TouchableOpacity onPress={handleOnPress} style={styles.imageContainer}>
         <Image
           source={{
             uri: `https://www.ole.com.ar${
@@ -42,12 +32,11 @@ const Card = ({ setShowModal, ...props }) => {
         </View>
         <Text style={styles.subtitle}>{props.subtitle}</Text>
       </TouchableOpacity>
-      <Text style={styles.summary} ellipsizeMode="tail" numberOfLines={2}>
-        {props.summary}
-      </Text>
-      {/*       <TouchableOpacity onPress={() => console.log('test')}>
-        <Image source={like} style={{ ...styles.icon, marginLeft: 0 }} />
-      </TouchableOpacity> */}
+      <TouchableOpacity
+        onPress={() => console.log('favorito')}
+        style={styles.likeContainer}>
+        <Image source={like} style={styles.icon} />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -2,14 +2,13 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 4,
   },
   title: {
     fontSize: 24,
     alignSelf: 'center',
-    paddingHorizontal: 4,
+    padding: 4,
     textAlign: 'center',
     fontWeight: 'bold',
     fontFamily: 'Montserrat-Regular',
@@ -18,6 +17,8 @@ export default StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontFamily: 'Montserrat-Regular',
+    padding: 0,
+    margin: 0,
   },
   subtitle: {
     position: 'absolute',
@@ -34,19 +35,13 @@ export default StyleSheet.create({
     width: '100%',
     maxWidth: 450,
     height: 200,
-    marginVertical: 8,
+    marginBottom: 12,
   },
   icon: {
     width: 25,
     height: 25,
     marginLeft: 15,
-  },
-  playImage: {
-    position: 'absolute',
-    width: 100,
-    height: 100,
-    marginLeft: 15,
-    backgroundColor: 'transparent',
+    tintColor: '#000',
   },
   overlay: {
     position: 'absolute',
@@ -58,8 +53,16 @@ export default StyleSheet.create({
     bottom: 0,
   },
   overlayHeart: {
-    color: 'transparent',
     width: 80,
     height: 80,
+  },
+  imageContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  likeContainer: {
+    alignSelf: 'flex-start',
+    marginLeft: 4,
+    marginVertical: 2,
   },
 });
