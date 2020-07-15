@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import like from '../../../assets/images/like.png';
 import play from '../../../assets/images/play.png';
+import HTML from 'react-native-render-html';
 import styles from './styles';
 
 const Card = ({ setShowModal, ...props }) => {
@@ -16,7 +17,12 @@ const Card = ({ setShowModal, ...props }) => {
       <Text style={styles.title} numberOfLines={2}>
         {props.title}
       </Text>
-      <Text style={styles.summary}>{props.summary}</Text>
+      <HTML
+        html={props.summary}
+        tagsStyles={{
+          p: styles.summary,
+        }}
+      />
       <TouchableOpacity onPress={handleOnPress} style={styles.imageContainer}>
         <Image
           source={{
@@ -30,7 +36,9 @@ const Card = ({ setShowModal, ...props }) => {
         <View style={styles.overlay}>
           <Image source={play} style={styles.overlayHeart} />
         </View>
-        <Text style={styles.subtitle}>{props.subtitle}</Text>
+        {props.subtitle && (
+          <Text style={styles.subtitle}>{props.subtitle}</Text>
+        )}
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => console.log('favorito')}

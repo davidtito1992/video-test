@@ -14,11 +14,9 @@ export default StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
   summary: {
-    fontSize: 14,
     textAlign: 'center',
     fontFamily: 'Montserrat-Regular',
-    padding: 0,
-    margin: 0,
+    padding: 4,
   },
   subtitle: {
     position: 'absolute',
