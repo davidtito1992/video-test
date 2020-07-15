@@ -1,22 +1,11 @@
 import React, { memo, useState, useEffect, useCallback } from 'react';
 import { SafeAreaView, View, FlatList, ActivityIndicator } from 'react-native';
 import VideoCard from '../../components/VideoCard';
+import Loading from '../../components/Loading';
 import VideoModalPlayer from '../../screens/VideoPlayer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getHome } from '../../../redux/home/actions';
 import styles from './styles';
-
-const Loading = () => (
-  <View
-    style={{
-      position: 'relative',
-      paddingVertical: 20,
-      marginTop: 10,
-      marginBottom: 10,
-    }}>
-    <ActivityIndicator animating size="small" color="#999" />
-  </View>
-);
 
 const Home = () => {
   const [feed, setFeed] = useState([]);
@@ -25,14 +14,16 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
-  const videos = useSelector(state => state?.home?.videos);
+  const { videos, moreItems } = useSelector(state => state?.home);
+
   const [showModal, setShowModal] = useState({ isVisible: false, data: null });
 
-  const loadPage = async (pageNumber = page, shouldRefresh = false) => {
+  const loadPage = (pageNumber = page, shouldRefresh = false) => {
     if (loading) return;
     setLoading(true);
     setPage(page + 1);
-    if (videos?.length <= pageNumber * 10) dispatch(getHome(pageNumber * 10));
+    if (videos?.length <= pageNumber * 10 && moreItems)
+      dispatch(getHome(pageNumber * 10));
     else {
       setLoading(false);
       const data = videos?.slice(pageNumber * 10);
@@ -41,7 +32,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    dispatch(getHome());
+    if (videos?.length === 0) dispatch(getHome());
   }, []);
 
   useEffect(() => {
@@ -51,10 +42,10 @@ const Home = () => {
     }
   }, [videos]);
 
-  const refreshList = async () => {
+  const refreshList = () => {
     setRefreshing(true);
     setPage(1);
-    await loadPage(0, true);
+    loadPage(0, true);
     setRefreshing(false);
   };
 

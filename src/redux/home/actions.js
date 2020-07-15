@@ -33,8 +33,7 @@ export const getHome = (offset = 0, limit = 10) => async dispatch => {
   try {
     const response = await VideosService.getHome(offset, limit);
     if (response.status === 200) {
-      const videos = response?.data;
-      dispatch(loadHomeSuccess(videos));
+      dispatch(loadHomeSuccess(response?.data));
     } else {
       dispatch(loadHomeError(response.error));
     }
