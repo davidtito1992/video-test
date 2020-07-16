@@ -19,24 +19,25 @@ const Home = () => {
   const [portraitMode, setPortraitMode] = useState(true);
 
   const dispatch = useDispatch();
-  const { videos, moreItems } = useSelector(state => state?.home);
+  const { videos, moreItems, pageGlobal } = useSelector(state => state?.home);
 
   const loadPage = (pageNumber = page, shouldRefresh = false) => {
     if (loading) return;
     setLoading(true);
-    setPage(page + 1);
-    if (videos?.length <= pageNumber * 10 && moreItems)
-      dispatch(getHome(pageNumber * 10));
+    if (pageNumber <= pageGlobal && moreItems)
+      dispatch(getHome(pageGlobal * 10));
     else {
+      const data = videos?.slice(pageNumber * 10, pageNumber * 10 + 10);
+      setFeed(feed => (shouldRefresh ? data : [...feed, ...data]));
       setLoading(false);
-      const data = videos?.slice(pageNumber * 10);
-      setFeed(shouldRefresh ? data : [...feed, ...data]);
     }
+    setPage(page => page + 1);
   };
 
   const refreshList = () => {
     setRefreshing(true);
     setPage(1);
+    setFeed([]);
     loadPage(0, true);
     setRefreshing(false);
   };

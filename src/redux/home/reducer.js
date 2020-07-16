@@ -1,6 +1,7 @@
 import { actionTypes } from './actions';
 
 const initialState = {
+  pageGlobal: 1,
   videos: [],
   mainLists: [],
   moreItems: true,
@@ -17,6 +18,7 @@ function videos(state = initialState, action) {
             ? state.mainLists.concat(action?.data?.listasPrincipales)
             : [...state.mainLists],
         videos: state.videos.concat(action?.data?.items),
+        pageGlobal: state?.pageGlobal + 1,
       };
     case actionTypes.FETCH_HOME_ERROR:
       return { ...state };
