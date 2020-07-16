@@ -1,5 +1,4 @@
 # Video-Test
-====================================
 
 Application in react native with pagination, scroll infinite, pull to refresh, , react-native-video, orientation, redux, redux-persist, apisauce, reactotron, react-navigation and Drawer.
 
@@ -29,7 +28,7 @@ Where the `BASE_URL` is the debug url api.
 Then create the `.env.production` file on the root too, with the same data that the last,
 but the `BASE_URL` must be the production url api.
 
-Install dependencies: 
+### Install dependencies: 
 
 `yarn` or `npm i`
 -----------
