@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import like from '../../../assets/images/like.png';
 import play from '../../../assets/images/play.png';
+import Config from 'react-native-config';
 import styles from './styles';
 
 const Card = ({ setShowModal, ...props }) => {
@@ -23,7 +24,7 @@ const Card = ({ setShowModal, ...props }) => {
       <TouchableOpacity onPress={handleOnPress} style={styles.imageContainer}>
         <Image
           source={{
-            uri: `https://www.ole.com.ar${related?.relatedImages[0]?.url}`,
+            uri: `${Config.BASE_URL_IMAGE}${related?.relatedImages[0]?.url}`,
           }}
           style={styles.image}
           resizeMode="cover"
